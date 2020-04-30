@@ -20,7 +20,7 @@ df.drop(['Unnamed: 0'], axis=1, inplace=True)
 df.info()
 
 """#Preprocessing data"""
-data_dir = "C:/Users/User/PycharmProjects/MoodSmartML/input"
+data_dir = "./input"
 contractions = pd.read_json(os.path.join(data_dir, 'english-contractions/contractions.json'), typ='series')
 contractions = contractions.to_dict()
 

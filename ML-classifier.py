@@ -52,7 +52,7 @@ df.info()
 
 
 """#Preprocessing data"""
-data_dir = "C:/Users/User/PycharmProjects/MoodSmartML/input"
+data_dir = "./input"
 contractions = pd.read_json(os.path.join(data_dir, 'english-contractions/contractions.json'), typ='series')
 contractions = contractions.to_dict()
 
@@ -88,6 +88,10 @@ def clean_tweets(tweets):
         cleaned_tweets.append(tweet)
 
     return cleaned_tweets
+
+
+nltk.download('stopwords')
+nltk.download('punkt')
 
 X = clean_tweets([tweet for tweet in df['message']])
 
