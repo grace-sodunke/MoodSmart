@@ -46,14 +46,14 @@ df.dropna(inplace=True)
 print(df.head())
 """
 
-df = pd.read_csv('sentiment_tweets3.csv')
+df = pd.read_csv('./data/sentiment_tweets3.csv')
 df.drop(['Unnamed: 0'], axis = 1, inplace = True)
 df.info()
 
 
 """#Preprocessing data"""
-data_dir = "./input"
-contractions = pd.read_json(os.path.join(data_dir, 'english-contractions/contractions.json'), typ='series')
+data_dir = "./data"
+contractions = pd.read_json(os.path.join(data_dir, 'contractions.json'), typ='series')
 contractions = contractions.to_dict()
 
 c_re = re.compile('(%s)' % '|'.join(contractions.keys()))
@@ -131,7 +131,7 @@ print(classification_report(y_test, predictions, digits=5))
 
 """#Improving our model with LSTM"""
 #Word Embedding
-EMBEDDING_FILE = os.path.join(data_dir, 'googles-trained-word2vec-model-in-python/GoogleNews-vectors-negative300.bin.gz')
+EMBEDDING_FILE = os.path.join(data_dir, 'GoogleNews-vectors-negative300.bin.gz')
 word2vec = KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True)
 
 EMBEDDING_DIM = 300

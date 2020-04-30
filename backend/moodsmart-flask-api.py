@@ -15,13 +15,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 
-df = pd.read_csv('sentiment_tweets3.csv')
+df = pd.read_csv('./data/sentiment_tweets3.csv')
 df.drop(['Unnamed: 0'], axis=1, inplace=True)
 df.info()
 
 """#Preprocessing data"""
-data_dir = "./input"
-contractions = pd.read_json(os.path.join(data_dir, 'english-contractions/contractions.json'), typ='series')
+data_dir = "./data"
+contractions = pd.read_json(os.path.join(data_dir, 'contractions.json'), typ='series')
 contractions = contractions.to_dict()
 
 c_re = re.compile('(%s)' % '|'.join(contractions.keys()))
