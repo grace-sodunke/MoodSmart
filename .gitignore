@@ -3,3 +3,5 @@
 /data/
 /.idea/
 /notebooks/.ipynb_checkpoints/
+/models/.ipynb_checkpoints/
+.ipynb_checkpoints/
