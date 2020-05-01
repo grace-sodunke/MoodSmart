@@ -85,7 +85,7 @@ def classify_tweet():
     prediction = model.predict(padded)
 
     # Package the response into a JSON
-    response = {'prediction': int(prediction[0][0] > 0.5)}
+    response = {'prediction': float(prediction[0][0])}
 
     return json.dumps(response)
 
