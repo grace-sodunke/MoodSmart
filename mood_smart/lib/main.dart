@@ -309,8 +309,8 @@ class _ClassifierState extends State<Classifier> {
   String value = 'data';
   changeState() {
     setState(() {
-      //print(_makePostRequest().toString());
-      value = '0.89514231064293';
+      String body = _makePostRequest().toString();
+      value = body;
     });
   }
 
