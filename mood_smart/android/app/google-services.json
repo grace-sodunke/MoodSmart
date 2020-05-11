@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "122150019167",
+    "firebase_url": "https://moodsmart-e2625.firebaseio.com",
+    "project_id": "moodsmart-e2625",
+    "storage_bucket": "moodsmart-e2625.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122150019167:android:67f58a6c0b0dcb45467bea",
+        "android_client_info": {
+          "package_name": "com.gracesodunke.moodsmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122150019167-623c0m0q0mr364vjio14cm804v9homkl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiPedy1RYqlz7dOlvjXjOU10R4No3BCGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122150019167-623c0m0q0mr364vjio14cm804v9homkl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

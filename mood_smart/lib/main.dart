@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:flutter_twitter/flutter_twitter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'week_report.dart';
 
 void main() {
@@ -9,6 +13,8 @@ void main() {
       home: Home(),
       routes: <String, WidgetBuilder>{
         '/MoodTracker': (BuildContext context) => MoodTracker(),
+        '/Settings': (BuildContext context) => Settings(),
+        '/SignIn': (BuildContext context) => SignIn(),
       },
     ),
   );
@@ -23,10 +29,17 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color(0xFF003468),
           actions: [
-            IconButton(icon: Icon(Icons.settings), onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/Settings');
+                }),
           ],
-          leading:
-              IconButton(icon: Icon(Icons.account_circle), onPressed: () {}),
+          leading: IconButton(
+              icon: Icon(Icons.account_circle),
+              onPressed: () {
+                Navigator.pushNamed(context, '/SignIn');
+              }),
         ),
         body: SafeArea(
           child: Center(
@@ -46,7 +59,7 @@ class Home extends StatelessWidget {
                         color: Color(0xFF003468),
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
+                            borderRadius: BorderRadius.circular(30.0)),
                         child: Text('MY MOOD TRACKER',
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.bold)),
@@ -66,7 +79,7 @@ class Home extends StatelessWidget {
                         color: Color(0xFF003468),
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0)),
+                            borderRadius: BorderRadius.circular(30.0)),
                         child: Text('CLASSIFIER DEMO',
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.bold)),
@@ -125,7 +138,11 @@ class _MoodTrackerState extends State<MoodTracker> {
         centerTitle: true,
         backgroundColor: Color(0xFF003468),
         actions: [
-          IconButton(icon: Icon(Icons.settings), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, '/Settings');
+              }),
         ],
       ),
       body: ListView.builder(
@@ -143,6 +160,134 @@ class _MoodTrackerState extends State<MoodTracker> {
                           april.map((week) => WeekCard(week: week)).toList()),
                 ));
           }),
+    );
+  }
+}
+
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  String loginState = ' |  Sign in with Twitter';
+
+  void _signInTwitter() async {
+    var twitterLogin = new TwitterLogin(
+      consumerKey: 'UNsEOEtHtrJ6bePIt1dIXJqz8',
+      consumerSecret: 'J13UIgk0j9IrTDfU2ZOdyQ1L2BdhblMqqMiCoj7Qicm9igK01e',
+    );
+
+    if (loginState == ' |  Sign out') {
+      setState(() {
+        loginState = ' |  Sign in with Twitter';
+      });
+      return await twitterLogin.logOut();
+    }
+
+    final TwitterLoginResult result = await twitterLogin.authorize();
+
+    switch (result.status) {
+      case TwitterLoginStatus.loggedIn:
+        var session = result.session;
+        setState(() {
+          loginState = ' |  Sign out';
+        });
+        print(session.username);
+        //_sendTokenAndSecretToServer(session.token, session.secret);
+        break;
+      case TwitterLoginStatus.cancelledByUser:
+        print('Cancelled by user');
+        //_showCancelMessage();
+        break;
+      case TwitterLoginStatus.error:
+        print(result.errorMessage);
+        // _showErrorMessage(result.error);
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue[200],
+      appBar: AppBar(
+        title: Text('Sign In'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF003468),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 50.0,
+                  child: Opacity(
+                    opacity: 0.85,
+                    child: FlatButton(
+                      color: Color(0xFF003468),
+                      textColor: Colors.white,
+                      onPressed: () {
+                        _signInTwitter();
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.twitter,
+                              color: Colors.white, size: 30.0),
+                          Text(loginState,
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Settings extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue[200],
+      appBar: AppBar(
+        title: Text('Settings'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF003468),
+      ),
+      body: Container(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('See your trustee contact',
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {},
+            ),
+            Divider(thickness: 1.0),
+            ListTile(
+              title: Text('About MoodSmart',
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {},
+            ),
+            Divider(thickness: 1.0),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -207,7 +352,11 @@ class _ReportPageState extends State<ReportPage> {
         centerTitle: true,
         backgroundColor: Color(0xFF003468),
         actions: [
-          IconButton(icon: Icon(Icons.settings), onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, '/Settings');
+              }),
         ],
       ),
       body: SingleChildScrollView(
