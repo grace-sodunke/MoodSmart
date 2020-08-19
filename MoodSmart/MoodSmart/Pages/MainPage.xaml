@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MoodSmart.MainPage">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <!--<Color x:Key="AccentColour">"Color.Blue"</Color>-->
+            <Style x:Key="SignInButton" TargetType="Button" >
+                <!--<Setter Property="BackgroundColor" Value="{StaticResource AccentColour}" />-->
+                <Setter Property="BorderColor" Value="#1C5F9B" />
+                <Setter Property="BorderRadius" Value="10" />
+                <Setter Property="BorderWidth" Value="3" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <StackLayout>
+        <Button x:Name="TwitterSignIn"
+           Text="Sign in to Twitter" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand"
+           Style="{StaticResource SignInButton}"/>
+    </StackLayout>
+
+</ContentPage>
