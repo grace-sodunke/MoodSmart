@@ -16,6 +16,9 @@ using MoodSmart.Droid.PageRenderer;
 using Xamarin.Forms;
 using Xamarin.Auth;
 using Newtonsoft.Json;
+using Java.Util;
+using Firebase.Database;
+using MoodSmart.Droid.Helpers;
 
 [assembly: ExportRenderer(typeof(ProviderLoginPage), typeof(LoginRenderer))]
 namespace MoodSmart.Droid.PageRenderer
@@ -66,15 +69,34 @@ namespace MoodSmart.Droid.PageRenderer
 
                 OAuthConfig.TwitterUser = JsonConvert.DeserializeObject<TwitterUser>(json);
 
+                FirebaseHelper firebaseHelper = new FirebaseHelper();
+                firebaseHelper.CreateUser();
+                
+                /*
+                HashMap twitterUser = new HashMap();
+                twitterUser.Put("id", OAuthConfig.TwitterUser.id);
+                twitterUser.Put("id_str", OAuthConfig.TwitterUser.id_str);
+                twitterUser.Put("name", OAuthConfig.TwitterUser.name);
+                twitterUser.Put("screen_name", OAuthConfig.TwitterUser.screen_name);
+                twitterUser.Put("location", OAuthConfig.TwitterUser.location);
+                twitterUser.Put("description", OAuthConfig.TwitterUser.description);
+                twitterUser.Put("url", OAuthConfig.TwitterUser.url);
+                twitterUser.Put("@protected", OAuthConfig.TwitterUser.@protected);
+
+                DatabaseReference newTwitterUser = AppDataHelper.GetDatabase().GetReference("twitter_user").Push();
+                newTwitterUser.SetValue(twitterUser);
+                */
+
+                /*
                 OAuthConfig.User = new UserDetails();
                 // Get and Save User Details 
 
                 OAuthConfig.User.TokenSecret = e.Account.Properties["oauth_token_secret"];
                 OAuthConfig.User.TwitterId = e.Account.Properties["user_id"];
                 OAuthConfig.User.ScreenName = e.Account.Properties["screen_name"];
+                */
 
-                OAuthConfig.SuccessfulLoginAction.Invoke();
-
+                OAuthConfig.SuccessfulLoginAction.Invoke();                
             }
             else
             {
@@ -86,7 +108,7 @@ namespace MoodSmart.Droid.PageRenderer
 
 /* NEXT STEPS
  * Once authenticated, save their new account to Firebase database (if isn't there already)
- * Test: Open up dashboard page and ge the account name not through the TwitterUser class, but through an API call to Firebase.
+ * Test: Open up dashboard page and get the account name not through the TwitterUser class, but through an API call to Firebase.
  * The above test will allow me to test how I'm able to put and retrieve information.
  * Now that user account authentication and creation is handled (later I need to think about how to sign out or sign out and delete your account),
  * I need to perform this: get past user tweets over a week (or any suitable time period for testing), perform sentiment analysis by requesting the model,

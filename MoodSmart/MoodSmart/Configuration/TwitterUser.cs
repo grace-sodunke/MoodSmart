@@ -9,11 +9,12 @@ namespace MoodSmart
 		public string id_str { get; set; }
 		public string name { get; set; }
 		public string screen_name { get; set; }
-		public string location { get; set; }
+		//public string location { get; set; }
 		public string description { get; set; }
 		public string url { get; set; }
 		//public Entities entities { get; set; }
 		public bool @protected { get; set; }
+		/*
 		public int followers_count { get; set; }
 		public int friends_count { get; set; }
 		public int listed_count { get; set; }
@@ -48,5 +49,6 @@ namespace MoodSmart
 		public bool follow_request_sent { get; set; }
 		public bool notifications { get; set; }
 		public string translator_type { get; set; }
+		*/
 	}
 }
